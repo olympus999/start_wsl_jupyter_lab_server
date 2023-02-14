@@ -10,11 +10,11 @@
 		exit
     )
 
-:: Need to remove any assocations made to port by 'portproxy'. Otherwise Jupyter Notebook will not run on specific port
+:: This solves the problem when the JupyterLab is restarted as it takes a bit of time to release the ports by 'portproxy' for reusing by WSL.
 :: ´netsh interface portproxy show all´ - Command useful for showing currently active proxies:
 netsh interface portproxy reset
 
-:: Restart the IP Helper Service - fixes bugs that happen sometimes
+:: Restart the "IP Helper Service" and make sure it is running - restarting fixes bugs that happen sometimes.
 net stop iphlpsvc && net start iphlpsvc
 
 :: Check if port is open
@@ -35,11 +35,7 @@ for /f "delims=[] tokens=2" %%a in ('ping -4 -n 1 %ComputerName% ^| findstr [') 
 for /f "usebackq tokens=2 delims= " %%i in (`wsl ip a ^| findstr eth0 ^| findstr 172`) do set ip_with_subnet=%%i
 for /f "tokens=1 delims=/" %%a in ("%ip_with_subnet%") do set WSLNetworkIP=%%a
 
-:: Start jupyter-lab
-:: wsl.exe bash -c "source ~/.bashrc; /home/anti/miniconda3/envs/main/bin/jupyter-lab"
-:: set c=runas /user:ANTI /savecred "wt.exe new-tab -p \"Ubuntu 22.04.1 LTS\" -- bash -i -l -c \"jupyter-lab && bash\""
-:: echo(c)
-:: %c%
+:: Start jupyter-lab. In my case "Ubuntu 22.04.1 LTS" is the name of profile in the Windows Terminal.
 
 wt.exe new-tab -p "Ubuntu 22.04.1 LTS" -- bash -i -l -c "jupyter-lab && bash"
 

@@ -7,3 +7,6 @@ Some important notes before blindly running the script and helping to debug:
 * default port is set to 8888
 * App "Windows Terminal" (WT) is needed - I find WT makes working with Ubuntu easier.
 * Profile used by the script is named "Ubuntu 22.04.1 LTS" in WT.
+* Firewall rule should be added manually (open port 8888 in Windows firewall settings)
+
+For setting up SSH access: https://medium.com/geekculture/enable-ssh-access-into-wsl-from-a-remote-computer-f2e4a962430
